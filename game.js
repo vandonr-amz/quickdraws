@@ -2,7 +2,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
 var width = c.width, height = c.height;
-var belayX = width/2, belayY = height;
+var belay = new Vec2(width/2, height);
 
 c.addEventListener("mousemove", function (e) {
             findxy('move', e)
@@ -12,26 +12,35 @@ c.addEventListener("click", function (e) {
             findxy('click', e)
         }, false);
         
-var anchors = new Quickdraw(belayX + 10, height/2, 30);
-var source = new Vec2(belayX, belayY);
+var anchors = [new Quickdraw(belay.x, belay.y, 0)];
 var dest = new Vec2();
 function findxy(res, e) {
 	ctx.clearRect(0, 0, width, height);
     
     currX = e.clientX - c.offsetLeft;
     currY = e.clientY - c.offsetTop;
+    dest = new Vec2(currX, currY);
     
     if (res == 'move') {
-        let prev = source;
-        dest = new Vec2(currX, currY);
+        let next = dest;
+        for (let i = anchors.length-1; i >= 0; i--) { 
+            let cur = anchors[i];
+            let prev;
+            if(i == 0) {
+                prev = belay;
+            } else {
+                prev = anchors[i-1].mobile;
+            }
 
-        let v1 = prev.minus(anchor.mobile);
-        let v2 = dest.minus(anchor.mobile);
-        let resulting = v1.plus(v2);
-        anchor.mobile = anchor.pos.plus(resulting.normalize().mult(anchor.length));
+            let v1 = prev.minus(cur.mobile);
+            let v2 = next.minus(cur.mobile);
+            let resulting = v1.plus(v2);
+            cur.mobile = cur.pos.plus(resulting.normalize().mult(cur.length));
 
+            next = cur.mobile;
+        }
     } else if (res == 'click') {
-        // nothing
+        anchors.push(new Quickdraw(currX, currY, 30));
     }
     drawSegments();
 }
@@ -41,10 +50,14 @@ function drawSegments() {
 
     ctx.beginPath();
     ctx.strokeStyle = "purple";
-    ctx.moveTo(belayX, belayY);
-    ctx.lineTo(anchor.mobile.x, anchor.mobile.y);
+    ctx.moveTo(belay.x, belay.y);
+    for(const a of anchors) {
+        ctx.lineTo(a.mobile.x, a.mobile.y);
+    }
     ctx.lineTo(dest.x, dest.y);
     ctx.stroke();
 
-    anchor.draw();
+    for(const a of anchors) {
+        a.draw();
+    }
 }
