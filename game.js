@@ -52,22 +52,45 @@ function findxy(res, e) {
     } else if (res == 'click') {
         anchors.push(new Quickdraw(currX, currY, 30));
     }
-    drawSegments();
+    drawAll();
 }
 
-function drawSegments() {
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-    ctx.strokeStyle = "purple";
-    ctx.moveTo(belay.x, belay.y);
-    for (const a of anchors) {
-        ctx.lineTo(a.mobile.x, a.mobile.y);
-    }
-    ctx.lineTo(dest.x, dest.y);
-    ctx.stroke();
+function drawAll() {
+    drawRope();
 
     for (const a of anchors) {
         a.draw();
+    }
+}
+
+let ropeImg = new Image();
+ropeImg.src = "assets/rope.png";
+
+function drawRope() {
+    let end = dest;
+    let textureOffset = 0;
+    for (var i = anchors.length - 1; i >= -1; i--) {
+        let next;
+        if (i >= 0) {
+            next = anchors[i].mobile;
+        } else {
+            next = belay;
+        }
+
+        let v = next.minus(end);
+        let angle = Math.atan2(v.y, v.x);
+        let len = v.len();
+
+        ctx.translate(end.x, end.y);
+        ctx.rotate(angle);
+        ctx.drawImage(ropeImg,
+            textureOffset, 0, // source rectangle coords
+            len, ropeImg.height, // source rectangle w/h
+            0, -ropeImg.height / 2, // position
+            len, ropeImg.height / 2); // scale
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        textureOffset = (textureOffset + len) % 13;
+        end = next;
     }
 }

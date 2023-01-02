@@ -51,13 +51,16 @@ class Quickdraw {
         let tx = this.pos.x;
         let ty = this.pos.y;
 
-        let scale = this.length / 104;
+        let scale = this.length / 102;
 
         ctx.translate(tx, ty);
         ctx.rotate(angle);
         ctx.drawImage(this.img, -9 * scale, -6 * scale, this.img.width * scale, this.img.height * scale);
+
+        // Reset transformations
         ctx.rotate(-angle);
         ctx.translate(-tx, -ty);
+
         /*ctx.beginPath();
         ctx.strokeStyle = "green";
         ctx.moveTo(this.pos.x, this.pos.y);
