@@ -39,12 +39,11 @@ function findxy(res, e) {
                 let resulting = v1.plus(v2);
                 cur.mobile = cur.pos.plus(resulting.normalize().mult(cur.length));
             } else {
-                if (inter.length != 2)
-                    console.log("pb");
-                if (inter[0].y > inter[1].y)
+                if (inter.length == 1 || inter[0].y > inter[1].y) {
                     cur.mobile = inter[0];
-                else
+                } else {
                     cur.mobile = inter[1];
+                }
             }
 
             next = cur.mobile;
