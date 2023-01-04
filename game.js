@@ -34,8 +34,8 @@ function findxy(res, e) {
 
             var inter = circleLineInter(cur.pos, cur.length, prev, next);
             if (inter.length == 0) {
-                let v1 = prev.minus(cur.mobile).normalize();
-                let v2 = next.minus(cur.mobile).normalize();
+                let v1 = prev.minus(cur.pos).normalize();
+                let v2 = next.minus(cur.pos).normalize();
                 let resulting = v1.plus(v2);
                 cur.mobile = cur.pos.plus(resulting.normalize().mult(cur.length));
             } else {
