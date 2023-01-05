@@ -1,5 +1,5 @@
 let c = document.getElementById("myCanvas") as HTMLCanvasElement;
-let ctx = c.getContext("2d");
+let ctx = c.getContext("2d")!;
 
 let width = c.width, height = c.height;
 let belay = new Vec2(width / 2, height);
@@ -55,17 +55,17 @@ function findxy(res: string, e: MouseEvent) {
 }
 
 function drawAll() {
-    drawRope();
+    drawRope(ctx);
 
     for (const a of anchors) {
-        a.draw();
+        a.draw(ctx);
     }
 }
 
 let ropeImg = new Image();
 ropeImg.src = "assets/rope.png";
 
-function drawRope() {
+function drawRope(ctx: CanvasRenderingContext2D) {
     let end = dest;
     let textureOffset = 0;
     for (let i = anchors.length - 1; i >= -1; i--) {

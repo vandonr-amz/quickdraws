@@ -4,7 +4,7 @@ class Vec2 {
     public readonly x: number;
     public readonly y: number;
 
-    constructor(x, y) {
+    constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
     }
@@ -45,7 +45,7 @@ class Quickdraw {
 
     private img: HTMLImageElement;
 
-    constructor(posX, posY, length) {
+    constructor(posX: number, posY: number, length: number) {
         this._pos = new Vec2(posX, posY);
         this.mobile = new Vec2(posX, posY + length);
         this.length = length;
@@ -54,7 +54,7 @@ class Quickdraw {
         this.img.src = "assets/bd12.png";
     }
 
-    draw() {
+    draw(ctx: CanvasRenderingContext2D) {
         let v = this.mobile.minus(this.pos);
         let angle = Math.atan2(v.y, v.x) - Math.PI / 2;
 
