@@ -1,8 +1,8 @@
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
+let c = document.getElementById("myCanvas") as HTMLCanvasElement;
+let ctx = c.getContext("2d");
 
-var width = c.width, height = c.height;
-var belay = new Vec2(width / 2, height);
+let width = c.width, height = c.height;
+let belay = new Vec2(width / 2, height);
 
 c.addEventListener("mousemove", function (e) {
     findxy('move', e)
@@ -12,27 +12,27 @@ c.addEventListener("click", function (e) {
     findxy('click', e)
 }, false);
 
-var anchors = [];
-var dest = new Vec2();
-function findxy(res, e) {
+let anchors: Quickdraw[] = [];
+let dest: Vec2;
+function findxy(res: string, e: MouseEvent) {
     ctx.clearRect(0, 0, width, height);
 
-    currX = e.clientX - c.offsetLeft;
-    currY = e.clientY - c.offsetTop;
+    let currX = e.clientX - c.offsetLeft;
+    let currY = e.clientY - c.offsetTop;
     dest = new Vec2(currX, currY);
 
     if (res == 'move') {
         let next = dest;
         for (let i = anchors.length - 1; i >= 0; i--) {
             let cur = anchors[i];
-            let prev;
+            let prev: Vec2;
             if (i == 0) {
                 prev = belay;
             } else {
                 prev = anchors[i - 1].mobile;
             }
 
-            var inter = circleLineInter(cur.pos, cur.length, prev, next);
+            let inter = circleLineInter(cur.pos, cur.length, prev, next);
             if (inter.length == 0) {
                 let v1 = prev.minus(cur.pos).normalize();
                 let v2 = next.minus(cur.pos).normalize();
@@ -68,7 +68,7 @@ ropeImg.src = "assets/rope.png";
 function drawRope() {
     let end = dest;
     let textureOffset = 0;
-    for (var i = anchors.length - 1; i >= -1; i--) {
+    for (let i = anchors.length - 1; i >= -1; i--) {
         let next;
         if (i >= 0) {
             next = anchors[i].mobile;
