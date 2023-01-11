@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "ES6",
         "sourceMap": true,
         "lib": [
-            "es5",
-            "dom"
+            "ES6",
+            "dom",
+            "dom.iterable"
         ],
-        "module": "commonjs",
+        "module": "ES6",
         "outDir": "compiled",
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,

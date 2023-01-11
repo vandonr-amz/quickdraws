@@ -1,3 +1,5 @@
+import { Vec2 } from "./Vec2.js";
+
 function sq(x: number): number {
     return x * x;
 }
@@ -5,7 +7,7 @@ function sq(x: number): number {
 /**
  * Returns the point(s) of intersection of the segment p1 - p2 and the circle defined by center and radius
  */
-function circleLineInter(center: Vec2, radius: number, p1: Vec2, p2: Vec2): Vec2[] {
+export function circleLineInter(center: Vec2, radius: number, p1: Vec2, p2: Vec2): Vec2[] {
     // inspired from https://cscheng.info/2016/06/09/calculate-circle-line-intersection-with-javascript-and-p5js.html
 
     // line: y = m * x + n

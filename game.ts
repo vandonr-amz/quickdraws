@@ -1,3 +1,7 @@
+import { Vec2 } from "./Vec2.js"
+import { Quickdraw } from "./Quickdraw.js";
+import { circleLineInter } from "./helpers.js";
+
 let c = document.getElementById("myCanvas") as HTMLCanvasElement;
 let ctx = c.getContext("2d")!;
 
