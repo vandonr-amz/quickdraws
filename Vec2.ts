@@ -29,6 +29,8 @@ export class Vec2 {
 
     normalize(): Vec2 {
         let l = this.len();
-        return new Vec2(this.x / l, this.y / l);
+        if (l > 0)
+            return new Vec2(this.x / l, this.y / l);
+        return new Vec2(0, 0);
     }
 }
